@@ -1,0 +1,36 @@
+--Create a MTB Bike Shop database using TREK bike models
+
+CREATE TABLE store (id INTEGER PRIMARY KEY, name TEXT, biketype TEXT, skill TEXT, frame TEXT, price INTEGER, popularity INTEGER);
+
+INSERT INTO store VALUES (1, "Marlin 6", "entry_level", "beginner", "hardtail", 749.99, 90);
+INSERT INTO store VALUES (2, "Marlin 7", "entry_level", "beginner", "hardtail", 899.99, 85);
+INSERT INTO store VALUES (3, "Marlin 8", "entry_level", "beginner", "hardtail", 1199.99, 80);
+INSERT INTO store VALUES (4, "Fuel EX 8", "all_terrain", "beginner", "full suspension", 4299.99, 95);
+INSERT INTO store VALUES (5, "Fuel EX 9.8", "all_terrain", "intermediete", "full suspension", 5999.99, 75);
+INSERT INTO store VALUES (6, "Slash 8", "downhill", "beginner", "full suspension", 3699.99, 90); 
+INSERT INTO store VALUES (7, "Slash 9.9", "downhill", "expert", "full suspension", 11549.99, 40);
+INSERT INTO store VALUES (8, "Top Fuel 8", "all_terrain", "beginner", "full suspension", 3499.99, 90);  
+INSERT INTO store VALUES (9, "Top Fuel 9.7", "all_terrain", "beginner", "full suspension", 4699.99, 85); 
+INSERT INTO store VALUES (10, "Top Fuel 9.8", "all_terrain", "expert", "full suspension", 5999.99, 80);
+INSERT INTO store VALUES (11, "Top Fuel 9.8 AXS", "all_terrain", "expert", "full suspension", 6649.99,82); 
+INSERT INTO store VALUES (12, "Top Fuel 9.9 AXS", "all_terrain", "expert", "full suspension", 11499.99, 60);
+INSERT INTO store VALUES (13, "Supercaliber 9.7", "cross_country", "beginner", "full suspension", 4599.99, 75);
+INSERT INTO store VALUES (14, "Supercaliber 9.8", "cross_country", "intermediete", "full suspension", 5999.99, 80);
+INSERT INTO store VALUES (15, "Supercaliber 9.8 AXS", "cross_country", "intermediete", "full suspension", 7049.99, 85);
+INSERT INTO store VALUES (16, "Farley 9.6", "fat_tire", "intermediete", "hardtail", 3699.99, 90);
+
+--display MTB database by price
+SELECT * FROM store
+ORDER BY price desc;
+
+--what is the avg price of bikes considered "all-terrain"?
+SELECT AVG(price) "avg biketype price"
+FROM store
+where biketype='all_terrain';
+
+--what is the most popular bike by name and what are the prices?
+SELECT name, price, popularity
+FROM store
+order by popularity desc
+limit 5;
+
