@@ -80,8 +80,27 @@ FROM fortune_companies;
 SELECT
 
 -- What industry has the most employees with healthcare benefits?
-SELECT SUM (employees)
+SELECT company_name
 FROM fortune_companies
-GROUP BY healthcare_benefits = 1;
+WHERE healthcare_benefits = 1
+GROUP BY industry
 
+-- Which companies have healthcare benefits *and* at least 20 paid days off?
+SELECT company_name
+FROM fortune_companies
+WHERE paid_time_off_days>20
+AND healthcare_benefits=1
+;
+
+-- Assign companies in Healthcare industry with ratings according to maternity leave offered
+SELECT
+company_name,
+CASE 
+  WHEN maternity_leave_weeks >= 10 THEN 'mother friendly workplace'
+  WHEN maternity_leave_weeks >= 8 THEN 'acceptable'
+  ELSE 'abysmal'
+END as mother_friendliness
+FROM fortune_companies
+WHERE industry='Healthcare'
+;
 
