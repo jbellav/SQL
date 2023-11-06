@@ -65,27 +65,34 @@ SELECT*
 FROM fortune_companies
 ORDER BY "revenue" desc;
 
+-- Which industry offers the greatest maternity leave?
 
 -- Do the largest companies by revenue have greater employee tenure?
 
 -- Do companies with more employees receive more paid days off?
-SELECT paid_time_off_days
-FROM fortune_companies
-ORDER BY "paid_time_off_days" desc;
-
-SELECT AVG (paid_time_off_days)
-FROM fortune_companies;
-
--- Which industry offers the greatest maternity leave?
 SELECT
+company_name,
+employees,
+paid_time_off_days
+FROM fortune_companies
+ORDER BY "employees" desc, "paid_time_off_days" desc;
+
+-- 
+SELECT company_name, employees, ROUND(AVG(paid_time_off_days),1) as large_employer_days_off
+FROM fortune_companies
+GROUP BY employees
+HAVING paid_time_off_days>15
+ORDER BY employees desc
+;
 
 -- What industry has the most employees with healthcare benefits?
-SELECT company_name
+SELECT company_name, industry
 FROM fortune_companies
-WHERE healthcare_benefits = 1
-GROUP BY industry
+WHERE healthcare_benefits=1
+GROUP BY "industry"
+;
 
--- Which companies have healthcare benefits *and* at least 20 paid days off?
+-- Which companies have healthcare benefits AND at least 20 paid days off?
 SELECT company_name
 FROM fortune_companies
 WHERE paid_time_off_days>20
@@ -96,11 +103,18 @@ AND healthcare_benefits=1
 SELECT
 company_name,
 CASE 
-  WHEN maternity_leave_weeks >= 10 THEN 'mother friendly workplace'
-  WHEN maternity_leave_weeks >= 8 THEN 'acceptable'
-  ELSE 'abysmal'
+  WHEN maternity_leave_weeks >= 10 THEN 'mother-friendly workplace'
+  WHEN maternity_leave_weeks >= 8 THEN 'moderately-acceptable'
+  ELSE 'poor'
 END as mother_friendliness
 FROM fortune_companies
 WHERE industry='Healthcare'
 ;
+
+-- Which industries have average revenues of at least $210B and what are their average revenues?
+SELECT industry, ROUND(AVG(revenue),1) as average_revenue_billions
+FROM fortune_companies
+GROUP BY industry
+HAVING average_revenue_billions>=210
+; 
 
